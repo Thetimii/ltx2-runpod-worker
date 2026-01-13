@@ -1,6 +1,6 @@
 # LTX-2 RunPod Serverless Worker
 
-> Built: 2026-01-13 | CUDA 12.1 | LTX-2 Video Generation | v1.0.1
+> Built: 2026-01-13 | CUDA 12.1 | LTX-2 Video Generation | v1.0.2
 
 Production-ready RunPod Serverless worker for **Lightricks/LTX-2** video generation with:
 
