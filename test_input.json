@@ -1,0 +1,17 @@
+{
+  "input": {
+    "mode": "t2v",
+    "prompt": "A clean studio product commercial shot of a perfume bottle, cinematic lighting, shallow depth of field",
+    "negative_prompt": "text, watermark, low quality, artifacts",
+    "seed": 123,
+    "steps": 25,
+    "guidance": 6.5,
+    "fps": 24,
+    "num_frames": 49,
+    "height": 512,
+    "width": 512,
+    "output_format": "mp4",
+    "return_signed_url": true,
+    "low_vram": false
+  }
+}

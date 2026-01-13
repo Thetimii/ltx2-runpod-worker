@@ -1,0 +1,27 @@
+# RunPod SDK
+runpod==1.*
+
+# Environment & validation
+python-dotenv==1.*
+pydantic==2.*
+
+# Supabase client
+supabase==2.*
+httpx==0.27.*
+
+# Core ML
+torch==2.5.*
+transformers==4.45.*
+accelerate==0.34.*
+safetensors==0.4.*
+
+# Diffusers - LTX2 support
+# Note: If LTX-2 pipeline is not available in 0.36, install from main:
+# git+https://github.com/huggingface/diffusers.git
+diffusers==0.36.*
+
+# Media processing
+imageio==2.*
+imageio-ffmpeg==0.5.*
+Pillow==10.*
+numpy==2.*
