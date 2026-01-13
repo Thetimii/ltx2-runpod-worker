@@ -42,15 +42,21 @@ def find_cached_model_path(model_name: str) -> str | None:
 MODEL_NAME = settings.MODEL_NAME
 MODEL_PATH = find_cached_model_path(MODEL_NAME)
 
-# ---- Global engine (loaded once per worker) ----
-print(f"[RunPod] Initializing LTX2Engine with model: {MODEL_NAME}")
-engine = LTX2Engine(
-    model_name=MODEL_NAME,
-    model_path=MODEL_PATH,
-    device=settings.DEVICE,
-    dtype=settings.DTYPE,
-)
-print("[RunPod] Worker ready to accept jobs")
+# ---- Global engine (lazy loaded) ----
+engine = None
+
+def get_engine():
+    global engine
+    if engine is None:
+        print(f"[RunPod] Initializing LTX2Engine with model: {MODEL_NAME}", flush=True)
+        engine = LTX2Engine(
+            model_name=MODEL_NAME,
+            model_path=MODEL_PATH,
+            device=settings.DEVICE,
+            dtype=settings.DTYPE,
+        )
+        print("[RunPod] Worker ready to accept jobs", flush=True)
+    return engine
 
 
 def handler(job):
@@ -69,6 +75,13 @@ def handler(job):
     
     print(f"[RunPod] Processing job {job_id}")
     
+    # Lazy load engine on first request
+    try:
+        eng = get_engine()
+    except Exception as e:
+        print(f"[RunPod] Failed to initialize engine: {e}")
+        return {"ok": False, "error": f"Initialization failed: {str(e)}"}
+    
     # Validate input with Pydantic
     try:
         inp = JobInput.model_validate(raw)
@@ -78,7 +91,7 @@ def handler(job):
     
     # Generate video
     try:
-        result = engine.generate(inp)
+        result = eng.generate(inp)
         out = JobOutput(
             ok=True,
             mode=inp.mode,

@@ -9,8 +9,8 @@ pydantic==2.*
 supabase==2.*
 httpx==0.27.*
 
-# Core ML
-torch==2.5.*
+# Core ML (Installed via Dockerfile for CUDA support)
+# torch==2.5.*
 transformers==4.45.*
 accelerate==0.34.*
 safetensors==0.4.*
